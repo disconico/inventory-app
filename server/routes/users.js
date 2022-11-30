@@ -8,7 +8,7 @@ const user_controller = require('../controllers/userController');
 router.get('/', user_controller.user_list);
 
 // POST new user
-router.post('/', user_controller.user_create_post);
+router.post('/', user_controller.user_create);
 
 // GET request for one User
 router.get('/:id', user_controller.user_detail);

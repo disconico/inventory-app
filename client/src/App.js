@@ -3,11 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
 import Home from './pages/Home';
-import Add from './pages/Add';
-import Users from './pages/Users';
-import Materials from './pages/Materials';
+import Users from './pages/users/users';
+import UserDetail from './pages/users/userDetail';
+import Materials from './pages/materials/materials';
 
 import Sidebar from './components/Sidebar';
+import CreateUser from './pages/users/createUser';
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
         <Route path='/*' element={<Home />} />
         <Route path='/home' element={<Home />} />
         <Route path='/users' element={<Users />} />
+        <Route path='/users/create' element={<CreateUser />} />
+        <Route path='/users/:id' element={<UserDetail />} />
         <Route path='/materials' element={<Materials />} />
-        <Route path='/add' element={<Add />} />
       </Routes>
     </div>
   );

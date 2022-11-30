@@ -40,7 +40,7 @@ exports.user_list = function (req, res, next) {
 // };
 
 // Handle User create on POST.
-exports.user_create_post = [
+exports.user_create = [
 	// Validate and sanitize fields.
 	body('first_name')
 		.trim()
@@ -60,6 +60,10 @@ exports.user_create_post = [
 		.optional({ checkFalsy: true })
 		.isISO8601()
 		.toDate(),
+	body('is_friendly')
+		.isBoolean()
+		.escape()
+		.withMessage('Are you friendly? Otherwise please check the box'),
 	// Process request after validation and sanitization.
 	(req, res, next) => {
 		// Extract the validation errors from a request.
@@ -72,9 +76,12 @@ exports.user_create_post = [
 		// Data from form is valid.
 
 		// Create an User object with escaped and trimmed data.
+		console.log(req.body);
 		User.create({
 			first_name: req.body.first_name,
 			family_name: req.body.family_name,
+			date_of_birth: req.body.date_of_birth,
+			is_friendly: req.body.is_friendly,
 		})
 			.then((items) => res.json(items))
 			.catch((err) => console.log(err));
