@@ -94,3 +94,10 @@ exports.user_detail = (req, res, next) => {
 		.then((items) => res.json(items))
 		.catch((err) => console.log(err));
 };
+
+// Handle User delete on POST.
+exports.user_delete_post = (req, res, next) => {
+	User.findByIdAndDelete({ _id: req.params.id })
+		.then((items) => res.json(items))
+		.catch((err) => console.log(err));
+};

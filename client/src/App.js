@@ -9,6 +9,8 @@ import Materials from './pages/materials/materials';
 
 import Sidebar from './components/Sidebar';
 import CreateUser from './pages/users/createUser';
+import DeleteUser from './pages/users/deleteUser';
+import UpdateUser from './pages/users/updateUser';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path='/users' element={<Users />} />
         <Route path='/users/create' element={<CreateUser />} />
         <Route path='/users/:id' element={<UserDetail />} />
+        <Route path='/users/:id/delete' element={<DeleteUser />} />
+        <Route path='/users/:id/update' element={<UpdateUser />} />
         <Route path='/materials' element={<Materials />} />
       </Routes>
     </div>

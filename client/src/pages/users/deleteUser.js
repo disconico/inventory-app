@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 
-const UserDetail = () => {
+const DeleteUser = () => {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -13,6 +13,7 @@ const UserDetail = () => {
     axios
       .get(`/users/${id}`)
       .then((res) => {
+        console.log(res.data);
         setUserData(res.data);
       })
       .catch((error) => {
@@ -20,25 +21,29 @@ const UserDetail = () => {
       });
   }, []);
 
+  const handleDelete = () => {
+    axios
+      .delete(`/users/${id}/delete`)
+      .then(() => {
+        alert('User deleted');
+        navigate('/users');
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
   if (error) return `Error: ${error.message}`;
   if (!userData) return 'No user!';
+  console.log(userData);
 
   return (
-    <div className='userDetail'>
-      {userData.id && <p>{userData.id}</p>}
-      {userData.first_name && <p>{userData.first_name}</p>}
-      {userData.family_name && <p>{userData.family_name}</p>}
-      {userData.date_of_birth && (
-        <p>{new Date(userData.date_of_birth).toISOString().substring(0, 10)}</p>
-      )}
-      <button onClick={() => navigate(`/users/${id}/update`)}>
-        Update user
-      </button>
-      <button onClick={() => navigate(`/users/${id}/delete`)}>
-        Delete user
-      </button>
+    <div className='deleteUser'>
+      <p>User : {userData.first_name}</p>
+      <p>Do you really want to delete this User?</p>
+      <button onClick={handleDelete}>Delete User</button>
     </div>
   );
 };
 
-export default UserDetail;
+export default DeleteUser;
