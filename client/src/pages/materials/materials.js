@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Users = () => {
   const [materials, setMaterials] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState();
   const [triggerAxios, setTriggerAxios] = useState(0);
   const navigate = useNavigate();
 
@@ -16,58 +17,37 @@ const Users = () => {
         console.log(res.data);
         setMaterials(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+      });
   }, [triggerAxios]);
 
-  // This method will map out the users
-  const materialList = materials ? (
+  // This method will map out the materials
+  const materialList =
+    materials &&
     materials.map((material, index) => {
       return (
         <div key={index}>
-          {material.product} : {material.quantity}
+          <Link to={material._id}>
+            {material.product} : {material.quantity}
+          </Link>
         </div>
       );
-    })
-  ) : (
-    <p>No material</p>
-  );
+    });
 
-  const errorList = errors ? (
-    errors.map((error, index) => {
-      return <div key={index}>{error.msg}</div>;
-    })
-  ) : (
-    <p>No material</p>
-  );
+  if (error) return `Error: ${error.message}`;
+  if (!materials) return 'No material!';
 
-  const handleClick = () => {
-    navigate('/add');
-  };
-
-  const handleAddClick = () => {
-    axios
-      .post('/materials', {
-        product: 'scissors',
-        quantity: '12',
-      })
-      .then((res) => {
-        console.log(res);
-        setErrors([]);
-        setTriggerAxios((prev) => prev + 1);
-      })
-      .catch((err) => {
-        console.log(err.response.data.errors);
-        setErrors(err.response.data.errors);
-      });
+  const handleNewMaterialClick = () => {
+    navigate('/materials/create');
   };
 
   return (
     <div className='Home'>
       <h1>Hello</h1>
       <div>{materialList}</div>
-      <button onClick={handleClick}>Go next</button>
-      <button onClick={handleAddClick}>Add one</button>
-      <div>{errorList}</div>
+      <button onClick={handleNewMaterialClick}>New Material</button>
     </div>
   );
 };

@@ -6,21 +6,24 @@ import axios from 'axios';
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState();
-  const [triggerAxios, setTriggerAxios] = useState(0);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // Get Users and handle errors
   useEffect(() => {
+    setLoading(true);
     axios
       .get('/users')
       .then((res) => {
         setUsers(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setError(error);
+        setLoading(false);
       });
-  }, [triggerAxios]);
+  }, []);
 
   // This method will map out the users
   const userList =
@@ -41,9 +44,14 @@ const Users = () => {
 
   return (
     <div className='Home'>
-      <h1>Hello</h1>
-      <div>{userList}</div>
-      <button onClick={handleNewUserClick}>New User</button>
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <>
+          <h1>Hello</h1>
+          <div>{userList}</div>
+          <button onClick={handleNewUserClick}>New User</button>
+        </>
+      )}
     </div>
   );
 };

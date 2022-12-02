@@ -8,3 +8,10 @@ exports.material_list = function (req, res, next) {
 		.then((items) => res.json(items))
 		.catch((err) => console.log(err));
 };
+
+// Display detail page for a specific material
+exports.material_detail = (req, res, next) => {
+	Material.findById(req.params.id)
+		.then((items) => res.json(items))
+		.catch((err) => console.log(err));
+};

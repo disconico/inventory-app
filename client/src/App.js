@@ -11,6 +11,7 @@ import Sidebar from './components/Sidebar';
 import CreateUser from './pages/users/createUser';
 import DeleteUser from './pages/users/deleteUser';
 import UpdateUser from './pages/users/updateUser';
+import MaterialDetail from './pages/materials/materialDetail';
 
 function App() {
   return (
@@ -20,12 +21,17 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/*' element={<Home />} />
         <Route path='/home' element={<Home />} />
+
+        {/* User routes */}
         <Route path='/users' element={<Users />} />
         <Route path='/users/create' element={<CreateUser />} />
         <Route path='/users/:id' element={<UserDetail />} />
         <Route path='/users/:id/delete' element={<DeleteUser />} />
         <Route path='/users/:id/update' element={<UpdateUser />} />
+
+        {/* Material routes */}
         <Route path='/materials' element={<Materials />} />
+        <Route path='/materials/:id' element={<MaterialDetail />} />
       </Routes>
     </div>
   );
