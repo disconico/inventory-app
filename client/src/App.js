@@ -12,6 +12,7 @@ import CreateUser from './pages/users/createUser';
 import DeleteUser from './pages/users/deleteUser';
 import UpdateUser from './pages/users/updateUser';
 import MaterialDetail from './pages/materials/materialDetail';
+import CreateMaterial from './pages/materials/createMaterial';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
 
         {/* Material routes */}
         <Route path='/materials' element={<Materials />} />
+        <Route path='/materials/create' element={<CreateMaterial />} />
         <Route path='/materials/:id' element={<MaterialDetail />} />
       </Routes>
     </div>

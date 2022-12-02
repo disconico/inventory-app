@@ -78,10 +78,10 @@ const CreateUser = () => {
         <label htmlFor='is_friendly'>Are you friendly?</label>
         <br />
         <br />
+        <button onClick={createUser} type='submit'>
+          Submit
+        </button>
       </form>
-      <button onClick={createUser} type='submit'>
-        Submit
-      </button>
     </div>
   );
 };
