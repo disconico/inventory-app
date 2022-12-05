@@ -31,6 +31,7 @@ const UserDetail = () => {
       {userData.date_of_birth && (
         <p>{new Date(userData.date_of_birth).toISOString().substring(0, 10)}</p>
       )}
+      {userData.is_friendly && <p>{`${userData.first_name} is friendly!`}</p>}
       <button onClick={() => navigate(`/users/${id}/update`)}>
         Update user
       </button>

@@ -37,7 +37,7 @@ const Users = () => {
     });
 
   if (error) return `Error: ${error.message}`;
-  if (!materials) return 'No material!';
+  if (!materials || materials.length === 0) return 'No material!';
 
   const handleNewMaterialClick = () => {
     navigate('/materials/create');

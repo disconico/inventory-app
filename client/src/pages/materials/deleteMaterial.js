@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 
-const MaterialDetail = () => {
+const DeleteMaterial = () => {
   const [materialData, setMaterialData] = useState(null);
   const [error, setError] = useState(null);
 
@@ -13,6 +13,7 @@ const MaterialDetail = () => {
     axios
       .get(`/materials/${id}`)
       .then((res) => {
+        console.log(res.data);
         setMaterialData(res.data);
       })
       .catch((error) => {
@@ -20,22 +21,29 @@ const MaterialDetail = () => {
       });
   }, []);
 
+  const handleDelete = () => {
+    axios
+      .delete(`/materials/${id}/delete`)
+      .then(() => {
+        alert('Material deleted');
+        navigate('/materials');
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
+
   if (error) return `Error: ${error.message}`;
   if (!materialData) return 'No material!';
+  console.log(materialData);
 
   return (
-    <div className='materialDetail'>
-      {materialData.id && <p>{materialData.id}</p>}
-      {materialData.product && <p>{materialData.product}</p>}
-      {materialData.quantity && <p>{materialData.quantity}</p>}
-      <button onClick={() => navigate(`/materials/${id}/update`)}>
-        Update material
-      </button>
-      <button onClick={() => navigate(`/materials/${id}/delete`)}>
-        Delete material
-      </button>
+    <div className='deleteMaterial'>
+      <p>Product : {materialData.product}</p>
+      <p>Do you really want to delete this material?</p>
+      <button onClick={handleDelete}>Delete Material</button>
     </div>
   );
 };
 
-export default MaterialDetail;
+export default DeleteMaterial;

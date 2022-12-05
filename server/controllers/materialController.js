@@ -51,3 +51,49 @@ exports.material_detail = (req, res, next) => {
 		.then((items) => res.json(items))
 		.catch((err) => console.log(err));
 };
+
+// Handle material delete on POST.
+exports.material_delete_post = (req, res, next) => {
+	Material.findByIdAndDelete({ _id: req.params.id })
+		.then((items) => res.json(items))
+		.catch((err) => console.log(err));
+};
+
+// Handle material update on PUT
+exports.material_update_put = [
+	// Validate and sanitize fields
+	body('product')
+		.trim()
+		.isLength({ min: 1 })
+		.escape()
+		.withMessage('Product name must be specified.')
+		.isAlphanumeric()
+		.withMessage('Product name has non-alphanumeric characters.'),
+	body('quantity')
+		.escape()
+		.isInt({ min: 0 })
+		.withMessage('Must be greater or equal to 0'),
+	// Process request after validation and sanitization.
+	(req, res, next) => {
+		// Extract the validation errors from a request.
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+
+		// Data from form is valid.
+
+		// Update a Material object
+		console.log(req.body);
+		Material.updateOne(
+			{ _id: req.params.id },
+			{
+				product: req.body.product,
+				quantity: req.body.quantity,
+			},
+		)
+			.then((items) => res.json(items))
+			.catch((err) => console.log(err));
+	},
+];

@@ -18,7 +18,6 @@ const UpdateUser = () => {
     axios
       .get(`/users/${id}`)
       .then((res) => {
-        console.log(res.data);
         setUser((prev) => ({
           ...prev,
           id: res.data._id ? res.data._id : '',
@@ -29,7 +28,6 @@ const UpdateUser = () => {
             : '',
           is_friendly: res.data.is_friendly === true,
         }));
-        console.log(user);
       })
       .catch((error) => {
         setError(error);
@@ -46,11 +44,23 @@ const UpdateUser = () => {
     });
   };
 
-  const updateUser = () => {};
+  const updateUser = (e) => {
+    e.preventDefault();
+
+    axios
+      .put(`/users/${id}/update`, user)
+      .then((res) => {
+        console.log(res);
+        navigate(`/users/${id}`);
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error);
+      });
+  };
 
   if (error) return `Error: ${error.message}`;
   if (!user) return 'No user!';
-  console.log(user);
 
   return (
     <div className='userForm'>
@@ -88,7 +98,7 @@ const UpdateUser = () => {
         <br />
       </form>
       <button onClick={updateUser} type='submit'>
-        Submit
+        Update
       </button>
     </div>
   );

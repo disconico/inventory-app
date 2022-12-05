@@ -13,6 +13,8 @@ import DeleteUser from './pages/users/deleteUser';
 import UpdateUser from './pages/users/updateUser';
 import MaterialDetail from './pages/materials/materialDetail';
 import CreateMaterial from './pages/materials/createMaterial';
+import DeleteMaterial from './pages/materials/deleteMaterial';
+import UpdateMaterial from './pages/materials/updateMaterial';
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
         <Route path='/materials' element={<Materials />} />
         <Route path='/materials/create' element={<CreateMaterial />} />
         <Route path='/materials/:id' element={<MaterialDetail />} />
+        <Route path='/materials/:id/delete' element={<DeleteMaterial />} />
+        <Route path='/materials/:id/update' element={<UpdateMaterial />} />
       </Routes>
     </div>
   );

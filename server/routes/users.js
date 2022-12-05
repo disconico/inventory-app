@@ -13,9 +13,10 @@ router.post('/', user_controller.user_create);
 // GET request for one User
 router.get('/:id', user_controller.user_detail);
 
-// GET request to delete User
-
 // POST request to delete User
 router.delete('/:id/delete', user_controller.user_delete_post);
+
+// PUT request to update User
+router.put('/:id/update', user_controller.user_update_put);
 
 module.exports = router;
