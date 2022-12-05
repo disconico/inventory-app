@@ -20,13 +20,19 @@ const UpdateUser = () => {
       .then((res) => {
         setUser((prev) => ({
           ...prev,
-          id: res.data._id ? res.data._id : '',
-          first_name: res.data.first_name ? res.data.first_name : '',
-          family_name: res.data.family_name ? res.data.family_name : '',
-          date_of_birth: res.data.date_of_birth
-            ? new Date(res.data.date_of_birth).toISOString().substring(0, 10)
+          id: res.data.user_find._id ? res.data.user_find._id : '',
+          first_name: res.data.user_find.first_name
+            ? res.data.user_find.first_name
             : '',
-          is_friendly: res.data.is_friendly === true,
+          family_name: res.data.user_find.family_name
+            ? res.data.user_find.family_name
+            : '',
+          date_of_birth: res.data.user_find.date_of_birth
+            ? new Date(res.data.user_find.date_of_birth)
+                .toISOString()
+                .substring(0, 10)
+            : '',
+          is_friendly: res.data.user_find.is_friendly === true,
         }));
       })
       .catch((error) => {

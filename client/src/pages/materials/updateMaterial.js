@@ -5,19 +5,38 @@ import { useNavigate, useParams } from 'react-router-dom';
 const UpdateMaterial = () => {
   const [material, setMaterial] = useState({
     product: '',
-    quantity: 0,
+    quantity: '',
+    owner: '',
   });
-
+  const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
+  // Get Users and handle errors
+  useEffect(() => {
+    axios
+      .get('/users')
+      .then((res) => {
+        console.log(res.data);
+        setUsers(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   useEffect(() => {
     axios
       .get(`/materials/${id}`)
       .then((res) => {
-        setMaterial(res.data);
+        setMaterial((prev) => ({
+          ...prev,
+          product: res.data.product,
+          quantity: res.data.quantity,
+          owner: res.data.owner._id,
+        }));
       })
       .catch((error) => {
         setError(error);
@@ -40,6 +59,7 @@ const UpdateMaterial = () => {
     axios
       .put(`/materials/${id}/update`, material)
       .then((res) => {
+        console.log(res);
         navigate(`/materials/${id}`);
       })
       .catch((error) => {
@@ -65,11 +85,26 @@ const UpdateMaterial = () => {
         <input
           type='number'
           onChange={handleChange}
-          //   min={0}
+          min={0}
           required
           name='quantity'
           value={material.quantity}
         />
+        <select
+          id='owner'
+          value={material.owner}
+          onChange={handleChange}
+          name='owner'
+        >
+          {users &&
+            users.map((user, index) => {
+              return (
+                <option key={index} value={user._id}>
+                  {user.first_name}
+                </option>
+              );
+            })}
+        </select>
         <br />
         <br />
         <button onClick={updateMaterial} type='submit'>

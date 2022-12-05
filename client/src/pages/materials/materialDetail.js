@@ -9,6 +9,8 @@ const MaterialDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  console.log(materialData);
+
   useEffect(() => {
     axios
       .get(`/materials/${id}`)
@@ -25,9 +27,10 @@ const MaterialDetail = () => {
 
   return (
     <div className='materialDetail'>
-      {materialData.id && <p>{materialData.id}</p>}
+      {materialData._id && <p>{materialData._id}</p>}
       {materialData.product && <p>{materialData.product}</p>}
       {materialData.quantity && <p>{materialData.quantity}</p>}
+      {materialData.owner && <p>{materialData.owner.first_name}</p>}
       <button onClick={() => navigate(`/materials/${id}/update`)}>
         Update material
       </button>

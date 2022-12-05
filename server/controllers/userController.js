@@ -92,10 +92,31 @@ exports.user_create = [
 
 // Display detail page for a specific user
 exports.user_detail = (req, res, next) => {
-	User.findById(req.params.id)
-		.then((items) => res.json(items))
-		.catch((err) => console.log(err));
+	async.parallel(
+		{
+			user_find(callback) {
+				User.findById(req.params.id).exec(callback);
+			},
+			materials_find(callback) {
+				Material.find({ owner: req.params.id }).exec(callback);
+			},
+		},
+		(err, results) => {
+			if (err) {
+				console.log(err);
+				return res.status(400).json({ errors: err.array() });
+			}
+			res.json(results);
+		},
+	);
 };
+
+// // Display detail page for a specific user
+// exports.user_detail = (req, res, next) => {
+// 	User.findById(req.params.id)
+// 		.then((items) => res.json(items))
+// 		.catch((err) => console.log(err));
+// };
 
 // Handle User delete on POST
 exports.user_delete_post = (req, res, next) => {

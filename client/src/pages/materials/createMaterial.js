@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -6,9 +6,24 @@ const CreateMaterial = () => {
   const [material, setMaterial] = useState({
     product: '',
     quantity: '',
+    owner: '',
   });
+  const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
+
+  // Get Users and handle errors
+  useEffect(() => {
+    axios
+      .get('/users')
+      .then((res) => {
+        console.log(res.data);
+        setUsers(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,14 +69,34 @@ const CreateMaterial = () => {
         />
         <input
           type='number'
+          placeholder='Quantity'
           onChange={handleChange}
-          //   min={0}
+          min={0}
           required
           name='quantity'
           value={material.quantity}
         />
+        <select
+          id='owner'
+          value={material.owner}
+          onChange={handleChange}
+          name='owner'
+        >
+          <option value={''} disabled hidden>
+            Select owner
+          </option>
+          {users &&
+            users.map((user, index) => {
+              return (
+                <option key={index} value={user._id}>
+                  {user.first_name}
+                </option>
+              );
+            })}
+        </select>
         <br />
         <br />
+
         <button onClick={createMaterial} type='submit'>
           Submit
         </button>

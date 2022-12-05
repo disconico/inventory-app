@@ -32,12 +32,13 @@ const Users = () => {
           <Link to={material._id}>
             {material.product} : {material.quantity}
           </Link>
+          <p>Owner : {material.owner.first_name}</p>
         </div>
       );
     });
 
   if (error) return `Error: ${error.message}`;
-  if (!materials || materials.length === 0) return 'No material!';
+  if (!materials) return 'No material!';
 
   const handleNewMaterialClick = () => {
     navigate('/materials/create');

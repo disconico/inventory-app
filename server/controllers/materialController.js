@@ -5,6 +5,7 @@ const { body, validationResult } = require('express-validator');
 exports.material_list = function (req, res, next) {
 	Material.find()
 		.sort([['quantity', 'descending']])
+		.populate('owner')
 		.then((items) => res.json(items))
 		.catch((err) => console.log(err));
 };
@@ -23,6 +24,11 @@ exports.material_create = [
 		.escape()
 		.isInt({ min: 0 })
 		.withMessage('Must be greater or equal to 0'),
+	body('owner')
+		.trim()
+		.isLength({ min: 1 })
+		.escape()
+		.withMessage('Owner must be specified'),
 	// Process request after validation and sanitization.
 	(req, res, next) => {
 		// Extract the validation errors from a request.
@@ -39,6 +45,7 @@ exports.material_create = [
 		Material.create({
 			product: req.body.product,
 			quantity: req.body.quantity,
+			owner: req.body.owner,
 		})
 			.then((items) => res.json(items))
 			.catch((err) => console.log(err));
@@ -48,6 +55,7 @@ exports.material_create = [
 // Display detail page for a specific material
 exports.material_detail = (req, res, next) => {
 	Material.findById(req.params.id)
+		.populate('owner')
 		.then((items) => res.json(items))
 		.catch((err) => console.log(err));
 };
@@ -73,6 +81,11 @@ exports.material_update_put = [
 		.escape()
 		.isInt({ min: 0 })
 		.withMessage('Must be greater or equal to 0'),
+	body('owner')
+		.trim()
+		.isLength({ min: 1 })
+		.escape()
+		.withMessage('Owner must be specified'),
 	// Process request after validation and sanitization.
 	(req, res, next) => {
 		// Extract the validation errors from a request.
@@ -91,6 +104,7 @@ exports.material_update_put = [
 			{
 				product: req.body.product,
 				quantity: req.body.quantity,
+				owner: req.body.owner,
 			},
 		)
 			.then((items) => res.json(items))
