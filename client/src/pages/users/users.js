@@ -43,11 +43,10 @@ const Users = () => {
   };
 
   return (
-    <div className='Home'>
+    <div className='users'>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
-          <h1>Hello</h1>
           <div>{userList}</div>
           <button onClick={handleNewUserClick}>New User</button>
         </>

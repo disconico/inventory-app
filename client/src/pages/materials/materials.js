@@ -6,26 +6,28 @@ import axios from 'axios';
 const Users = () => {
   const [materials, setMaterials] = useState([]);
   const [error, setError] = useState();
-  const [triggerAxios, setTriggerAxios] = useState(0);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   // This method fetches the users from the database.
   useEffect(() => {
+    setLoading(true);
     axios
       .get('/materials')
       .then((res) => {
         console.log(res.data);
         setMaterials(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setError(error);
+        setLoading(false);
       });
-  }, [triggerAxios]);
+  }, []);
 
   // This method will map out the materials
-  const materialList =
-    materials &&
+  const materialList = materials.length ? (
     materials.map((material, index) => {
       return (
         <div key={index}>
@@ -35,7 +37,10 @@ const Users = () => {
           <p>Owner : {material.owner.first_name}</p>
         </div>
       );
-    });
+    })
+  ) : (
+    <p>No material !</p>
+  );
 
   if (error) return `Error: ${error.message}`;
   if (!materials) return 'No material!';
@@ -45,10 +50,14 @@ const Users = () => {
   };
 
   return (
-    <div className='Home'>
-      <h1>Hello</h1>
-      <div>{materialList}</div>
-      <button onClick={handleNewMaterialClick}>New Material</button>
+    <div className='materials'>
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <>
+          <div>{materialList}</div>
+          <button onClick={handleNewMaterialClick}>New Material</button>
+        </>
+      )}
     </div>
   );
 };

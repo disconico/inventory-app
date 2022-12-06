@@ -20,7 +20,6 @@ const Home = () => {
 
   return (
     <div className='Home'>
-      <h1>Hello</h1>
       <div>User count : {userCount}</div>
       <div>Material count : {materialCount}</div>
     </div>

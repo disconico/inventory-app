@@ -5,6 +5,7 @@ import axios from 'axios';
 const MaterialDetail = () => {
   const [materialData, setMaterialData] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -12,13 +13,16 @@ const MaterialDetail = () => {
   console.log(materialData);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/materials/${id}`)
       .then((res) => {
         setMaterialData(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
+        setLoading(false);
       });
   }, []);
 
@@ -27,16 +31,21 @@ const MaterialDetail = () => {
 
   return (
     <div className='materialDetail'>
-      {materialData._id && <p>{materialData._id}</p>}
-      {materialData.product && <p>{materialData.product}</p>}
-      {materialData.quantity && <p>{materialData.quantity}</p>}
-      {materialData.owner && <p>{materialData.owner.first_name}</p>}
-      <button onClick={() => navigate(`/materials/${id}/update`)}>
-        Update material
-      </button>
-      <button onClick={() => navigate(`/materials/${id}/delete`)}>
-        Delete material
-      </button>
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <>
+          {materialData._id && <p>{materialData._id}</p>}
+          {materialData.product && <p>{materialData.product}</p>}
+          {materialData.quantity && <p>{materialData.quantity}</p>}
+          {materialData.owner && <p>{materialData.owner.first_name}</p>}
+          <button onClick={() => navigate(`/materials/${id}/update`)}>
+            Update material
+          </button>
+          <button onClick={() => navigate(`/materials/${id}/delete`)}>
+            Delete material
+          </button>
+        </>
+      )}
     </div>
   );
 };

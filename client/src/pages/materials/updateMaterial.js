@@ -10,20 +10,25 @@ const UpdateMaterial = () => {
   });
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
   // Get Users and handle errors
   useEffect(() => {
+    setLoading(true);
     axios
       .get('/users')
       .then((res) => {
         console.log(res.data);
         setUsers(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setError(error);
+        setLoading(false);
       });
   }, []);
 
@@ -53,7 +58,7 @@ const UpdateMaterial = () => {
     });
   };
 
-  const updateMaterial = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
@@ -73,44 +78,45 @@ const UpdateMaterial = () => {
 
   return (
     <div className='materialForm'>
-      <form action='post'>
-        <input
-          type='text'
-          placeholder='Product Name'
-          required
-          onChange={handleChange}
-          name='product'
-          value={material.product}
-        />
-        <input
-          type='number'
-          onChange={handleChange}
-          min={0}
-          required
-          name='quantity'
-          value={material.quantity}
-        />
-        <select
-          id='owner'
-          value={material.owner}
-          onChange={handleChange}
-          name='owner'
-        >
-          {users &&
-            users.map((user, index) => {
-              return (
-                <option key={index} value={user._id}>
-                  {user.first_name}
-                </option>
-              );
-            })}
-        </select>
-        <br />
-        <br />
-        <button onClick={updateMaterial} type='submit'>
-          Update
-        </button>
-      </form>
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <form onSubmit={handleSubmit}>
+          <input
+            type='text'
+            placeholder='Product Name'
+            required
+            onChange={handleChange}
+            name='product'
+            value={material.product}
+          />
+          <input
+            type='number'
+            onChange={handleChange}
+            min={0}
+            required
+            name='quantity'
+            value={material.quantity}
+          />
+          <select
+            id='owner'
+            value={material.owner}
+            onChange={handleChange}
+            name='owner'
+          >
+            {users &&
+              users.map((user, index) => {
+                return (
+                  <option key={index} value={user._id}>
+                    {user.first_name}
+                  </option>
+                );
+              })}
+          </select>
+          <br />
+          <br />
+          <button type='submit'>Update</button>
+        </form>
+      )}
     </div>
   );
 };

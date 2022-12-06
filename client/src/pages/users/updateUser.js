@@ -50,7 +50,7 @@ const UpdateUser = () => {
     });
   };
 
-  const updateUser = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
@@ -70,7 +70,7 @@ const UpdateUser = () => {
 
   return (
     <div className='userForm'>
-      <form action='post'>
+      <form onSubmit={handleSubmit}>
         <input
           type='text'
           placeholder='First Name'
@@ -103,9 +103,7 @@ const UpdateUser = () => {
         <br />
         <br />
       </form>
-      <button onClick={updateUser} type='submit'>
-        Update
-      </button>
+      <button type='submit'>Update</button>
     </div>
   );
 };

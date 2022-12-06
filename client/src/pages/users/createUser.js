@@ -23,7 +23,7 @@ const CreateUser = () => {
     });
   };
 
-  const createUser = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
@@ -46,7 +46,7 @@ const CreateUser = () => {
 
   return (
     <div className='userForm'>
-      <form action='post'>
+      <form onSubmit={handleSubmit}>
         <input
           type='text'
           placeholder='First Name'
@@ -61,6 +61,7 @@ const CreateUser = () => {
           onChange={handleChange}
           name='family_name'
           value={user.family_name}
+          required
         />
         <input
           type='date'
@@ -78,9 +79,7 @@ const CreateUser = () => {
         <label htmlFor='is_friendly'>Are you friendly?</label>
         <br />
         <br />
-        <button onClick={createUser} type='submit'>
-          Submit
-        </button>
+        <button type='submit'>Submit</button>
       </form>
     </div>
   );

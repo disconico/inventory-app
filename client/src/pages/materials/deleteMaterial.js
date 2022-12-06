@@ -5,19 +5,23 @@ import axios from 'axios';
 const DeleteMaterial = () => {
   const [materialData, setMaterialData] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/materials/${id}`)
       .then((res) => {
         console.log(res.data);
         setMaterialData(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
+        setLoading(false);
       });
   }, []);
 
@@ -39,9 +43,14 @@ const DeleteMaterial = () => {
 
   return (
     <div className='deleteMaterial'>
-      <p>Product : {materialData.product}</p>
-      <p>Do you really want to delete this material?</p>
-      <button onClick={handleDelete}>Delete Material</button>
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <>
+          <p>Product : {materialData.product}</p>
+          <p>Do you really want to delete this material?</p>
+          <button onClick={handleDelete}>Delete Material</button>
+        </>
+      )}
     </div>
   );
 };

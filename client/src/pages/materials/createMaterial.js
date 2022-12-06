@@ -9,19 +9,25 @@ const CreateMaterial = () => {
     owner: '',
   });
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   // Get Users and handle errors
   useEffect(() => {
+    setLoading(true);
     axios
       .get('/users')
       .then((res) => {
         console.log(res.data);
         setUsers(res.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
+        setError(error);
+        setLoading(false);
       });
   }, []);
 
@@ -35,7 +41,7 @@ const CreateMaterial = () => {
     });
   };
 
-  const createMaterial = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     axios
@@ -56,51 +62,57 @@ const CreateMaterial = () => {
       });
   };
 
+  if (error) return `Error: ${error.message}`;
+
   return (
     <div className='materialForm'>
-      <form action='post'>
-        <input
-          type='text'
-          placeholder='Product Name'
-          required
-          onChange={handleChange}
-          name='product'
-          value={material.product}
-        />
-        <input
-          type='number'
-          placeholder='Quantity'
-          onChange={handleChange}
-          min={0}
-          required
-          name='quantity'
-          value={material.quantity}
-        />
-        <select
-          id='owner'
-          value={material.owner}
-          onChange={handleChange}
-          name='owner'
-        >
-          <option value={''} disabled hidden>
-            Select owner
-          </option>
-          {users &&
-            users.map((user, index) => {
-              return (
-                <option key={index} value={user._id}>
-                  {user.first_name}
-                </option>
-              );
-            })}
-        </select>
-        <br />
-        <br />
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor='product'>Product name :</label>
+          <input
+            type='text'
+            placeholder='Product Name'
+            required
+            onChange={handleChange}
+            name='product'
+            id='product'
+            value={material.product}
+          />
+          <input
+            type='number'
+            placeholder='Quantity'
+            onChange={handleChange}
+            min={0}
+            required
+            name='quantity'
+            value={material.quantity}
+          />
+          <select
+            id='owner'
+            value={material.owner}
+            onChange={handleChange}
+            name='owner'
+            required
+          >
+            <option value={''} disabled hidden>
+              Select owner
+            </option>
+            {users &&
+              users.map((user, index) => {
+                return (
+                  <option key={index} value={user._id}>
+                    {user.first_name}
+                  </option>
+                );
+              })}
+          </select>
+          <br />
+          <br />
 
-        <button onClick={createMaterial} type='submit'>
-          Submit
-        </button>
-      </form>
+          <button type='submit'>Submit</button>
+        </form>
+      )}
     </div>
   );
 };

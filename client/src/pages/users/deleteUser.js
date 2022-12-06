@@ -7,20 +7,24 @@ const DeleteUser = () => {
   const [userData, setUserData] = useState(null);
   const [userMaterials, setUserMaterials] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/users/${id}`)
       .then((res) => {
         console.log(res.data);
         setUserData(res.data.user_find);
         setUserMaterials(res.data.materials_find);
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
+        setLoading(false);
       });
   }, []);
 
@@ -52,18 +56,24 @@ const DeleteUser = () => {
 
   return (
     <div className='deleteUser'>
-      <p>User : {userData.first_name}</p>
-      {userMaterials.length > 0 && (
-        <div>
-          <h3>Please delete those materials before proceeding :</h3>
-          <div>{materialList}</div>
-        </div>
-      )}
-      {!userMaterials.length > 0 && (
-        <div>
-          <p>Do you really want to delete this User?</p>
-          <button onClick={handleDelete}>Delete User</button>
-        </div>
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <>
+          {' '}
+          <p>User : {userData.first_name}</p>
+          {userMaterials.length > 0 && (
+            <div>
+              <h3>Please delete those materials before proceeding :</h3>
+              <div>{materialList}</div>
+            </div>
+          )}
+          {!userMaterials.length > 0 && (
+            <div>
+              <p>Do you really want to delete this User?</p>
+              <button onClick={handleDelete}>Delete User</button>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
