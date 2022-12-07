@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Material = require('../models/material');
 const async = require('async');
+const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 
 //Index for Home page
@@ -104,7 +105,7 @@ exports.user_detail = (req, res, next) => {
 		(err, results) => {
 			if (err) {
 				console.log(err);
-				return res.status(400).json({ errors: err.array() });
+				return res.status(400);
 			}
 			res.json(results);
 		},

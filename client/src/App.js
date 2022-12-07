@@ -18,7 +18,7 @@ import UpdateMaterial from './pages/materials/updateMaterial';
 
 function App() {
   return (
-    <div className='App'>
+    <div className='container mx-auto'>
       <Sidebar />
       <Routes>
         <Route path='/' element={<Home />} />

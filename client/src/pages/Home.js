@@ -19,7 +19,7 @@ const Home = () => {
   }, [triggerAxios]);
 
   return (
-    <div className='Home'>
+    <div className='w-full'>
       <div>User count : {userCount}</div>
       <div>Material count : {materialCount}</div>
     </div>

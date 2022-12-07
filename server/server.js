@@ -1,3 +1,6 @@
+require('dotenv').config({ path: './config.env' });
+
+const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -5,7 +8,8 @@ const logger = require('morgan');
 const port = process.env.PORT || '8000';
 const cors = require('cors');
 const mongoose = require('mongoose');
-require('dotenv').config({ path: './config.env' });
+const compression = require('compression');
+const helmet = require('helmet');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -20,6 +24,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression()); // Compress all routes
+app.use(helmet());
 
 // Set up mongoose connection
 const mongoDB = process.env.ATLAS_URI;
@@ -45,19 +51,19 @@ app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`);
 });
 
-// // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-// 	next(createError(404));
-// });
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+	next(createError(404));
+});
 
-// // error handler
-// app.use(function (err, req, res, next) {
-// 	// set locals, only providing error in development
-// 	res.locals.message = err.message;
-// 	res.locals.error = req.app.get('env') === 'development' ? err : {};
+// error handler
+app.use(function (err, req, res, next) {
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-// 	// render the error page
-// 	console.log(err.message);
-// });
+	// Log the error page
+	console.log(`Error ${err.status} - ${err.message}` || 500);
+});
 
 module.exports = app;
