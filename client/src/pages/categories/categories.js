@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const Materials = () => {
-  const [materials, setMaterials] = useState([]);
+const Categories = () => {
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ const Materials = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get('/materials')
+      .get('/categories')
       .then((res) => {
         console.log(res.data);
-        setMaterials(res.data);
+        setCategories(res.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -27,39 +27,37 @@ const Materials = () => {
   }, []);
 
   // This method will map out the materials
-  const materialList = materials.length ? (
-    materials.map((material, index) => {
+  const categoryList = categories.length ? (
+    categories.map((category, index) => {
       return (
         <div key={index}>
-          <Link to={material._id}>
-            {material.product} : {material.quantity}
-          </Link>
-          <p>Owner : {material.owner.first_name}</p>
+          <Link to={category._id}>{category.name}</Link>
+          <p>{category.description}</p>
         </div>
       );
     })
   ) : (
-    <p>No material !</p>
+    <p>No category !</p>
   );
 
   if (error) return `Error: ${error.message}`;
-  if (!materials) return 'No material!';
+  if (!categories) return 'No category!';
 
-  const handleNewMaterialClick = () => {
-    navigate('/materials/create');
+  const handleNewCategoryClick = () => {
+    navigate('/categories/create');
   };
 
   return (
-    <div className='materials'>
+    <div className=''>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
-          <div>{materialList}</div>
-          <button onClick={handleNewMaterialClick}>New Material</button>
+          <div>{categoryList}</div>
+          <button onClick={handleNewCategoryClick}>New Category</button>
         </>
       )}
     </div>
   );
 };
 
-export default Materials;
+export default Categories;

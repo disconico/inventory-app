@@ -14,6 +14,7 @@ const helmet = require('helmet');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const materialsRouter = require('./routes/materials');
+const categoriesRouter = require('./routes/categories');
 const homeRouter = require('./routes/home');
 
 const app = express();
@@ -33,6 +34,7 @@ const mongoDB = process.env.ATLAS_URI;
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/materials', materialsRouter);
+app.use('/categories', categoriesRouter);
 app.use('/home', homeRouter);
 
 app.listen(port, () => {

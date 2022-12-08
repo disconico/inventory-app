@@ -12,16 +12,5 @@ const UserSchema = new Schema(
 	{ collection: 'users' },
 );
 
-// UserSchema.virtual('date_of_birth_formatted').get(function () {
-// 	return this.date_of_birth
-// 		? DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED)
-// 		: '';
-// });
-
-// UserSchema.virtual('url').get(function () {
-// 	// We don't use an arrow function as we'll need the this object
-// 	return `/users/${this._id}`;
-// });
-
 // Export model
 module.exports = mongoose.model('User', UserSchema);

@@ -1,7 +1,6 @@
 const User = require('../models/user');
 const Material = require('../models/material');
 const async = require('async');
-const mongoose = require('mongoose');
 const { body, validationResult } = require('express-validator');
 
 //Index for Home page

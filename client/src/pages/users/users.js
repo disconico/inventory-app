@@ -48,7 +48,6 @@ const Users = () => {
       {!loading && (
         <>
           <div>{userList}</div>
-          <Link to={'6384b59be33e24046c08663'}>Test</Link>
           <button onClick={handleNewUserClick}>New User</button>
         </>
       )}
