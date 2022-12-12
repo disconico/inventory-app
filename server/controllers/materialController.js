@@ -21,15 +21,25 @@ exports.material_create = [
 		.withMessage('Product name must be specified.')
 		.isAlphanumeric()
 		.withMessage('Product name has non-alphanumeric characters.'),
+	body('description').trim().isLength({ min: 1 }).escape(),
 	body('quantity')
 		.escape()
 		.isInt({ min: 0 })
 		.withMessage('Must be greater or equal to 0'),
+	body('price')
+		.escape()
+		.isInt({ min: 1 })
+		.withMessage('Must be greater or equal to 1'),
 	body('owner')
 		.trim()
 		.isLength({ min: 1 })
 		.escape()
 		.withMessage('Owner must be specified'),
+	body('category')
+		.trim()
+		.isLength({ min: 1 })
+		.escape()
+		.withMessage('Category must be specified'),
 	// Process request after validation and sanitization.
 	(req, res, next) => {
 		// Extract the validation errors from a request.
@@ -45,7 +55,10 @@ exports.material_create = [
 		console.log(req.body);
 		Material.create({
 			product: req.body.product,
+			description: req.body.description,
+			price: req.body.price,
 			quantity: req.body.quantity,
+			category: req.body.category,
 			owner: req.body.owner,
 		})
 			.then((items) => res.json(items))
@@ -57,6 +70,7 @@ exports.material_create = [
 exports.material_detail = (req, res, next) => {
 	Material.findById(req.params.id)
 		.populate('owner')
+		.populate('category')
 		.then((items) => res.json(items))
 		.catch((err) => console.log(err));
 };
@@ -78,15 +92,25 @@ exports.material_update_put = [
 		.withMessage('Product name must be specified.')
 		.isAlphanumeric()
 		.withMessage('Product name has non-alphanumeric characters.'),
+	body('description').trim().isLength({ min: 1 }).escape(),
 	body('quantity')
 		.escape()
 		.isInt({ min: 0 })
 		.withMessage('Must be greater or equal to 0'),
+	body('price')
+		.escape()
+		.isInt({ min: 1 })
+		.withMessage('Must be greater or equal to 1'),
 	body('owner')
 		.trim()
 		.isLength({ min: 1 })
 		.escape()
 		.withMessage('Owner must be specified'),
+	body('category')
+		.trim()
+		.isLength({ min: 1 })
+		.escape()
+		.withMessage('Category must be specified'),
 	// Process request after validation and sanitization.
 	(req, res, next) => {
 		// Extract the validation errors from a request.
@@ -104,7 +128,10 @@ exports.material_update_put = [
 			{ _id: req.params.id },
 			{
 				product: req.body.product,
+				description: req.body.description,
+				price: req.body.price,
 				quantity: req.body.quantity,
+				category: req.body.category,
 				owner: req.body.owner,
 			},
 		)

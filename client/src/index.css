@@ -6,13 +6,13 @@
     font-family: typed;
     src: url(./assets/fonts/Type\ Machine.ttf);
 }
-
+/* 
 @layer base {
     html {
 font-family: 'Courier New', Courier, monospace;
     }
-}
-
+} */
+/* 
 body {
   background-color: #000300;
-}
+} */

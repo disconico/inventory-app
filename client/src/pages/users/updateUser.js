@@ -10,11 +10,13 @@ const UpdateUser = () => {
     is_friendly: false,
   });
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/users/${id}`)
       .then((res) => {
@@ -34,9 +36,11 @@ const UpdateUser = () => {
             : '',
           is_friendly: res.data.user_find.is_friendly === true,
         }));
+        setLoading(false);
       })
       .catch((error) => {
         setError(error);
+        setLoading(false);
       });
   }, []);
 
@@ -69,41 +73,95 @@ const UpdateUser = () => {
   if (!user) return 'No user!';
 
   return (
-    <div className='userForm'>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='First Name'
-          required
-          onChange={handleChange}
-          name='first_name'
-          value={user.first_name}
-        />
-        <input
-          type='text'
-          placeholder='Family Name'
-          onChange={handleChange}
-          name='family_name'
-          value={user.family_name}
-        />
-        <input
-          type='date'
-          onChange={handleChange}
-          name='date_of_birth'
-          value={user.date_of_birth}
-        />
-        <input
-          type='checkbox'
-          id='is_friendly'
-          checked={user.is_friendly}
-          onChange={handleChange}
-          name='is_friendly'
-        />
-        <label htmlFor='is_friendly'>Are you friendly?</label>
-        <br />
-        <br />
-      </form>
-      <button type='submit'>Update</button>
+    <div>
+      {loading && <h1>Loading.....</h1>}
+      {!loading && (
+        <div className='p-4 md:max-w-xl'>
+          <h1 className='text-2xl font-bold text-gray-900 mb-4 uppercase'>
+            Update user
+          </h1>
+          <form onSubmit={handleSubmit} autoComplete='off'>
+            <div className='grid gap-4 mb-6'>
+              <div>
+                <label
+                  htmlFor='first_name'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  First name :
+                </label>
+                <input
+                  type='text'
+                  id='first_name'
+                  placeholder='First Name'
+                  required
+                  onChange={handleChange}
+                  name='first_name'
+                  value={user.first_name}
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor='family_name'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Family name :
+                </label>
+                <input
+                  type='text'
+                  id='family_name'
+                  placeholder='Family Name'
+                  onChange={handleChange}
+                  name='family_name'
+                  value={user.family_name}
+                  required
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor='date'
+                  className='block mb-2 text-sm font-medium text-gray-900'
+                >
+                  Date of birth :
+                </label>
+                <input
+                  type='date'
+                  id='date'
+                  onChange={handleChange}
+                  name='date_of_birth'
+                  value={user.date_of_birth}
+                  className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
+                />
+              </div>
+            </div>
+            <div className='flex items-start mb-6 gap-4'>
+              <div className='flex items-center h-5'>
+                <input
+                  type='checkbox'
+                  id='is_friendly'
+                  checked={user.is_friendly}
+                  onChange={handleChange}
+                  name='is_friendly'
+                  className='w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300'
+                />
+              </div>
+              <label
+                htmlFor='is_friendly'
+                className='block mb-2 text-sm font-medium text-gray-900'
+              >
+                Are you <span className='text-blue-600 '>friendly</span> ?
+              </label>
+            </div>
+            <button
+              type='submit'
+              className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

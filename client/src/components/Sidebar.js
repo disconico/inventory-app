@@ -28,7 +28,7 @@ const Sidebar = () => {
       <Link
         to={`/${link.url}`}
         key={i}
-        className='hover:scale-105 hover:text-yellow-500'
+        className='hover:scale-105 hover:text-blue-600 hover:font-semibold'
         onClick={handleClose}
       >
         {link.name}
@@ -37,9 +37,13 @@ const Sidebar = () => {
   });
 
   return (
-    <aside className='flex flex-col mx-auto w-full items-end p-4 text-lg'>
-      <div className='hidden mx-auto w-full md:flex flex-col'>{linksList}</div>
-      <div onClick={handleNav} className='block md:hidden'>
+    <aside className='flex flex-col mx-auto w-full  p-4 text-lg'>
+      <div className='hidden mx-auto w-full md:flex flex-col gap-1.5'>
+        <h1 className='mb-4'>Hello</h1>
+        {linksList}
+      </div>
+      <div onClick={handleNav} className=' md:hidden flex justify-between'>
+        <h1>Hello</h1>
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
       </div>
       <div
