@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Material = require('../models/material');
+const Category = require('../models/category');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 
@@ -12,6 +13,9 @@ exports.index = function (req, res, next) {
 			},
 			material_count(callback) {
 				Material.countDocuments({ quantity: { $gt: 0 } }, callback);
+			},
+			category_count(callback) {
+				Category.countDocuments({}, callback);
 			},
 		},
 		(err, results) => {

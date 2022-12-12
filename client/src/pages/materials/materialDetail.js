@@ -30,20 +30,37 @@ const MaterialDetail = () => {
   if (!materialData) return 'No material!';
 
   return (
-    <div className='materialDetail'>
+    <div className='p-4 flex flex-col gap-4'>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
-          {materialData._id && <p>{materialData._id}</p>}
-          {materialData.product && <p>{materialData.product}</p>}
-          {materialData.quantity && <p>{materialData.quantity}</p>}
-          {materialData.owner && <p>{materialData.owner.first_name}</p>}
-          <button onClick={() => navigate(`/materials/${id}/update`)}>
-            Update material
-          </button>
-          <button onClick={() => navigate(`/materials/${id}/delete`)}>
-            Delete material
-          </button>
+          {materialData._id && (
+            <p className='font-bold text-xl'>Product id : {materialData._id}</p>
+          )}
+          {materialData.product && <p>Name : {materialData.product}</p>}
+          {materialData.description && (
+            <p>Description : {materialData.description}</p>
+          )}
+          {materialData.category && (
+            <p>Category : {materialData.category.name}</p>
+          )}
+          {materialData.quantity && <p>Quantity : {materialData.quantity}</p>}
+          {materialData.price && <p>Price : {materialData.quantity}</p>}
+          {materialData.owner && <p>Owner : {materialData.owner.first_name}</p>}
+          <div className='flex gap-4'>
+            <button
+              onClick={() => navigate(`/materials/${id}/update`)}
+              className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-center'
+            >
+              Update product
+            </button>
+            <button
+              onClick={() => navigate(`/materials/${id}/delete`)}
+              className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-center'
+            >
+              Delete product
+            </button>
+          </div>
         </>
       )}
     </div>

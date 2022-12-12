@@ -55,12 +55,12 @@ const DeleteUser = () => {
   console.log(userData);
 
   return (
-    <div className='deleteUser'>
+    <div className='p-4 flex flex-col gap-4'>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
           {' '}
-          <p>User : {userData.first_name}</p>
+          <p className='font-bold text-xl'>User : {userData.first_name}</p>
           {userMaterials.length > 0 && (
             <div>
               <h3>Please delete those materials before proceeding :</h3>

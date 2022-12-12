@@ -42,13 +42,18 @@ const DeleteMaterial = () => {
   console.log(materialData);
 
   return (
-    <div className='deleteMaterial'>
+    <div className='p-4 flex flex-col gap-4'>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
-          <p>Product : {materialData.product}</p>
-          <p>Do you really want to delete this material?</p>
-          <button onClick={handleDelete}>Delete Material</button>
+          <p className='font-bold text-xl'>Product : {materialData.product}</p>
+          <p>Do you really want to delete this product?</p>
+          <button
+            onClick={handleDelete}
+            className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-start'
+          >
+            Delete Product
+          </button>
         </>
       )}
     </div>

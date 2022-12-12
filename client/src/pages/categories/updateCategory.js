@@ -67,7 +67,7 @@ const UpdateCategory = () => {
           <h1 className='text-2xl font-bold text-gray-900 mb-4 uppercase'>
             update category
           </h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autoComplete='off'>
             <div className='grid gap-4 mb-6'>
               <div>
                 <label

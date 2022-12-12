@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const UserDetail = () => {
@@ -29,10 +30,12 @@ const UserDetail = () => {
   const materialList = userMaterials.length ? (
     userMaterials.map((material, index) => {
       return (
-        <p key={index}>
-          {' '}
-          {material.product} : {material.quantity}
-        </p>
+        <Link key={index} to={`/materials/${material._id}`}>
+          <p>
+            {' '}
+            {material.product} : {material.quantity}
+          </p>
+        </Link>
       );
     })
   ) : (
@@ -43,30 +46,43 @@ const UserDetail = () => {
   if (!userData) return 'No user!';
 
   return (
-    <div className='userDetail'>
+    <div className='p-4 flex flex-col gap-4'>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
           {' '}
-          {userData.id && <p>{userData.id}</p>}
-          {userData.first_name && <p>{userData.first_name}</p>}
-          {userData.family_name && <p>{userData.family_name}</p>}
+          {userData._id && (
+            <p className='font-bold text-xl'>User id : {userData._id}</p>
+          )}
+          {userData.first_name && <p>First name : {userData.first_name}</p>}
+          {userData.family_name && <p>Family name : {userData.family_name}</p>}
           {userData.date_of_birth && (
             <p>
+              Birthday :{' '}
               {new Date(userData.date_of_birth).toISOString().substring(0, 10)}
             </p>
           )}
           {userData.is_friendly && (
             <p>{`${userData.first_name} is friendly!`}</p>
           )}
-          <p>Currents products owned : </p>
+          <p className='text-xl'>
+            Current products owned by {userData.first_name}:{' '}
+          </p>
           {materialList}
-          <button onClick={() => navigate(`/users/${id}/update`)}>
-            Update user
-          </button>
-          <button onClick={() => navigate(`/users/${id}/delete`)}>
-            Delete user
-          </button>
+          <div className='flex gap-4 '>
+            <button
+              onClick={() => navigate(`/users/${id}/update`)}
+              className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-center'
+            >
+              Update user
+            </button>
+            <button
+              onClick={() => navigate(`/users/${id}/delete`)}
+              className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-center'
+            >
+              Delete user
+            </button>
+          </div>
         </>
       )}
     </div>

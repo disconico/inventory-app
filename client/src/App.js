@@ -22,7 +22,7 @@ import UpdateCategory from './pages/categories/updateCategory';
 
 function App() {
   return (
-    <div className='flex flex-col p-4 md:p-0 md:grid grid-cols-[220px_1fr] h-screen'>
+    <div className='flex flex-col  md:p-0 md:grid grid-cols-[220px_1fr] h-screen text-gray-900 max-w-[1240px]'>
       <Sidebar />
       <Routes>
         <Route path='/' element={<Home />} />

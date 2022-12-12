@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import CategoryCard from './CategoryCard';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -28,14 +29,9 @@ const Categories = () => {
 
   // This method will map out the materials
   const categoryList = categories.length ? (
-    categories.map((category, index) => {
-      return (
-        <div key={index}>
-          <Link to={category._id}>{category.name}</Link>
-          <p>{category.description}</p>
-        </div>
-      );
-    })
+    categories.map((category, index) => (
+      <CategoryCard key={index} category={category} />
+    ))
   ) : (
     <p>No category !</p>
   );
@@ -48,12 +44,20 @@ const Categories = () => {
   };
 
   return (
-    <div className=''>
+    <div className='p-4'>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
+          <h1 className='text-2xl font-bold text-gray-900 mb-4 uppercase'>
+            List of categories
+          </h1>
           <div>{categoryList}</div>
-          <button onClick={handleNewCategoryClick}>New Category</button>
+          <button
+            onClick={handleNewCategoryClick}
+            className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-center'
+          >
+            New Category
+          </button>
         </>
       )}
     </div>

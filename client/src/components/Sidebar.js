@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { FcDataConfiguration } from 'react-icons/fc';
 
 const Sidebar = () => {
   const [nav, setNav] = useState(false);
@@ -37,23 +38,30 @@ const Sidebar = () => {
   });
 
   return (
-    <aside className='flex flex-col mx-auto w-full  p-4 text-lg'>
-      <div className='hidden mx-auto w-full md:flex flex-col gap-1.5'>
-        <h1 className='mb-4'>Hello</h1>
+    <aside className='flex flex-col mx-auto w-full p-4 text-gray-700'>
+      <div className='hidden mx-auto w-full md:flex flex-col gap-2'>
+        <div className='flex items-center gap-4 mb-4'>
+          <FcDataConfiguration size={40} />
+        </div>
         {linksList}
       </div>
       <div onClick={handleNav} className=' md:hidden flex justify-between'>
-        <h1>Hello</h1>
+        <div className='flex items-center justify-between gap-4'>
+          <FcDataConfiguration size={40} />
+        </div>
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
       </div>
       <div
         className={
           nav
-            ? 'fixed left-0 top-0 w-[80%] h-full border-r border-r-gray-900 bg-[#000300] ease-in duration-500'
+            ? 'fixed left-0 top-0 w-[80%] h-full border-r border-r-gray-900 bg-white ease-in duration-500'
             : 'fixed left-[-100%]'
         }
       >
-        <div className='mx-auto w-full flex flex-col p-4 items-start'>
+        <div className='mx-auto w-full flex flex-col gap-2 p-4 items-start'>
+          <div className='flex items-center gap-4 mb-4'>
+            <FcDataConfiguration size={40} />
+          </div>
           {linksList}
         </div>
       </div>

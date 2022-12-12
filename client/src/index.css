@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: typed;
-    src: url(./assets/fonts/Type\ Machine.ttf);
+    font-family: Inter;
+    src: url(./assets/fonts/Inter.ttf);
 }
-/* 
+
 @layer base {
     html {
-font-family: 'Courier New', Courier, monospace;
+font-family: 'Inter', sans-serif;
+font-size: 14px;
     }
-} */
+}
 /* 
 body {
   background-color: #000300;
