@@ -32,22 +32,24 @@ const Home = () => {
   if (error) return `Error: ${error.message}`;
 
   return (
-    <div
-      className={`p-4 flex flex-col gap-8 ${
-        darkMode ? 'dark' : 'notDark'
-      } dark:bg-slate-800 dark:text-white`}
-    >
-      <h1 className='font-bold text-3xl uppercase'>
-        Welcome to your Inventory{' '}
-      </h1>
-      <div>
-        <h3 className='text-2xl'>As of today there is in the inventory :</h3>
-        <br></br>
-        <div>{userCount} registered users</div>
-        <div>{materialCount} different products</div>
-        <div>{categoryCount} categories</div>
+    !loading && (
+      <div
+        className={`p-4 flex flex-col gap-8 ${
+          darkMode ? 'dark' : 'notDark'
+        } dark:bg-slate-800 dark:text-white`}
+      >
+        <h1 className='font-bold text-3xl uppercase'>
+          Welcome to your Inventory{' '}
+        </h1>
+        <div>
+          <h3 className='text-2xl'>As of today there is in the inventory :</h3>
+          <br></br>
+          <div>{userCount} registered users</div>
+          <div>{materialCount} different products</div>
+          <div>{categoryCount} categories</div>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 
