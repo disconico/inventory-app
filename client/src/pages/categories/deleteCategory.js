@@ -54,21 +54,28 @@ const DeleteCategory = () => {
   if (!category) return 'No category!';
 
   return (
-    <div className=''>
+    <div className='p-4 flex flex-col gap-4'>
       {loading && <h1>Loading.....</h1>}
       {!loading && (
         <>
+          <p className='font-bold text-xl'>Category : {category.name}</p>
           {materials.length > 0 && (
             <div>
-              <h3>Please delete those materials before proceeding :</h3>
-              <div>{materialList}</div>
+              <h3 className='mb-4'>
+                Please delete those materials before proceeding :
+              </h3>
+              <div className='flex flex-col gap-4'>{materialList}</div>
             </div>
           )}
           {!materials.length && (
             <div>
-              <p>Category : {category.name}</p>
               <p>Do you really want to delete this category?</p>
-              <button onClick={handleDelete}>Delete Category</button>
+              <button
+                onClick={handleDelete}
+                className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-center'
+              >
+                Delete Category
+              </button>
             </div>
           )}
         </>

@@ -63,14 +63,21 @@ const DeleteUser = () => {
           <p className='font-bold text-xl'>User : {userData.first_name}</p>
           {userMaterials.length > 0 && (
             <div>
-              <h3>Please delete those materials before proceeding :</h3>
-              <div>{materialList}</div>
+              <h3 className='mb-4'>
+                Please delete those materials before proceeding :
+              </h3>
+              <div className='flex flex-col gap-4'>{materialList}</div>
             </div>
           )}
           {!userMaterials.length > 0 && (
             <div>
               <p>Do you really want to delete this User?</p>
-              <button onClick={handleDelete}>Delete User</button>
+              <button
+                onClick={handleDelete}
+                className='text-white bg-blue-500 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[200px] my-4 py-2 text-center self-center'
+              >
+                Delete User
+              </button>
             </div>
           )}
         </>

@@ -45,11 +45,15 @@ const Sidebar = () => {
         </div>
         {linksList}
       </div>
-      <div onClick={handleNav} className=' md:hidden flex justify-between'>
+      <div className=' md:hidden flex justify-between'>
         <div className='flex items-center justify-between gap-4'>
           <FcDataConfiguration size={40} />
         </div>
-        {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+        {nav ? (
+          <AiOutlineClose onClick={handleNav} size={20} />
+        ) : (
+          <AiOutlineMenu size={20} onClick={handleNav} />
+        )}
       </div>
       <div
         className={

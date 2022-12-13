@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { DarkModeContext } from './context/DarkModeContext';
 
 import Home from './pages/Home';
 import Users from './pages/users/users';
@@ -21,8 +22,14 @@ import DeleteCategory from './pages/categories/deleteCategory';
 import UpdateCategory from './pages/categories/updateCategory';
 
 function App() {
+  const { darkMode } = useContext(DarkModeContext);
+
   return (
-    <div className='flex flex-col  md:p-0 md:grid grid-cols-[220px_1fr] h-screen text-gray-900 max-w-[1240px]'>
+    <div
+      className={`flex flex-col  md:p-0 md:grid grid-cols-[220px_1fr] h-screen text-gray-900 ${
+        darkMode ? 'dark' : 'notDark'
+      } dark:bg-slate-800 dark:text-white`}
+    >
       <Sidebar />
       <Routes>
         <Route path='/' element={<Home />} />
